@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+}
+
+.maze{
+  justify-self: center;
+  align-self: center;
+height: 20rem;
+width: 31rem;
+padding: auto;
+}
