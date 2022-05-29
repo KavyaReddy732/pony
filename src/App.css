@@ -9,3 +9,48 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+ .button{
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 9px 30px;
+  width: max-content;
+  margin-left: 20px;
+}
+label{
+  padding: 30px;
+  margin-top: 30px;
+}
+input{
+  margin-left: 10px;
+  height: 1.5rem;
+  width:15rem ;
+}
+.container{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+
+@media screen and (max-width: 780px) {
+ .container{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+label{
+  padding: 30px;
+   margin-top: 0px;
+}
+input{
+  margin-left: 10px;
+  height: 1.5rem;
+  width:15rem ;
+}
+}
