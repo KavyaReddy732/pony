@@ -3,7 +3,9 @@ import './App.css';
 
 function App() {
   const [maze, setMaze] = useState();
-  console.log(maze)
+  const [id, setId] = useState('');
+  const [data, setData] = useState();
+  console.log(data)
 
   useEffect(() => {
     const maze = async () => {
@@ -22,6 +24,7 @@ function App() {
           })
         })
         const mazeId = await response.json();
+        setId(mazeId.maze_id)
         const getMaze = await fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${mazeId.maze_id}/print`, {
           method: 'get',
           headers: {
@@ -37,29 +40,65 @@ function App() {
     }
     maze();
   }, [])
+  useEffect(() => {
+    getMaze()
+  }, [id])
 
-  // useEffect(() => {
-  //   getMaze();
-  // }, [maze])
-  // const getMaze = async () => {
-  //   try {
-  //     const getMaze = await fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${maze}/print`, {
-  //       method: 'get'
-  //     })
-  //     const mazeData = getMaze;
-  //     console.log(mazeData)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const getMaze = async () => {
+    try {
+      if (id === '') {
+        return
+      }
+      const getMaze = await fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${id}`, {
+        method: 'get'
+      })
+      const mazeData = await getMaze.json();
+      setData(mazeData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (data === null) {
+      return
+    }
+    move()
+  }, [data])
+  const move = async () => {
+    data && data.data.map((directions, index) => {
+      console.log(index)
+      return directions.map((direction) => {
+        fetch(`https://ponychallenge.trustpilot.com/pony-challenge/maze/${id}`, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "direction": direction
+          })
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(direction)
+            console.log(data)
+          })
+          .catch(error => console.log(error))
+      })
+    })
+  }
+
 
   return (
     <div className="App">
       <h1>{'PONY'}</h1>
       <div className='maze'>
-        {maze}
+        <pre style={{ wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
+          {maze}
+        </pre>
       </div>
-    </div>
+    </div >
   );
 }
 

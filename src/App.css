@@ -3,9 +3,9 @@
 }
 
 .maze{
-  justify-self: center;
-  align-self: center;
-height: 20rem;
-width: 31rem;
-padding: auto;
+ display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
